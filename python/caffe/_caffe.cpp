@@ -288,7 +288,7 @@ void Solver_add_callback(Solver<Dtype> * solver, bp::object on_start,
 }
 
 // Seems boost cannot call the base method directly
-void Solver_add_nccl(Solver<Dtype>* solver
+void Solver_add_nccl(SGDSolver<Dtype>* solver
 #ifdef USE_NCCL
   , NCCL<Dtype>* nccl
 #endif
@@ -296,10 +296,6 @@ void Solver_add_nccl(Solver<Dtype>* solver
 #ifdef USE_NCCL
   solver->add_callback(nccl);
 #endif
-}
-
-void share_weights(Solver<Dtype>* solver, Net<Dtype>* net) {
-  net->ShareTrainedLayersWith(solver->net().get());
 }
 
 template<typename Dtype>
@@ -463,7 +459,6 @@ BOOST_PYTHON_MODULE(_caffe) {
     .def("step", &Solver<Dtype>::Step)
     .def("restore", &Solver<Dtype>::Restore)
     .def("snapshot", &Solver<Dtype>::Snapshot)
-    .def("share_weights", &share_weights)
     .add_property("param", bp::make_function(&Solver<Dtype>::param,
               bp::return_value_policy<bp::copy_const_reference>()));
   BP_REGISTER_SHARED_PTR_TO_PYTHON(Solver<Dtype>);

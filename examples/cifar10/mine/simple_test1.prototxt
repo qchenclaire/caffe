@@ -1,0 +1,13 @@
+layer {
+  name: "cifar2"
+  type: "Python"
+  top: "data_hard"
+  top: "label_hard"
+  include {
+    phase: TRAIN
+  }
+  python_param {
+    module: "cifar_mine"
+    layer: "Data_hard"
+  }
+}

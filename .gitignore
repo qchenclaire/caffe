@@ -1,4 +1,5 @@
 ## General
+*cpulimit*
 
 # Compiled Object files
 *.slo
@@ -70,6 +71,12 @@ models/*
 *.binaryproto
 *leveldb
 *lmdb
+*.mdb
+*.npy
+*experiment*
+*.txt
+*.log
+*.p
 
 # build, distribute, and bins (+ python proto bindings)
 build

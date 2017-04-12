@@ -51,8 +51,8 @@ void Solver<Dtype>::Init(const SolverParameter& param) {
   }
   // Scaffolding code
   InitTrainNet();
-  InitTestNets();
   if (Caffe::root_solver()) {
+    InitTestNets();
     LOG(INFO) << "Solver scaffolding done.";
   }
   iter_ = 0;
@@ -102,6 +102,7 @@ void Solver<Dtype>::InitTrainNet() {
 
 template <typename Dtype>
 void Solver<Dtype>::InitTestNets() {
+  CHECK(Caffe::root_solver());
   const bool has_net_param = param_.has_net_param();
   const bool has_net_file = param_.has_net();
   const int num_generic_nets = has_net_param + has_net_file;
@@ -271,6 +272,7 @@ void Solver<Dtype>::Solve(const char* resume_file) {
   CHECK(Caffe::root_solver());
   LOG(INFO) << "Solving " << net_->name();
   LOG(INFO) << "Learning Rate Policy: " << param_.lr_policy();
+  LOG(INFO) << "resume_file" << resume_file;
 
   // Initialize to false every time we start solving.
   requested_early_exit_ = false;
